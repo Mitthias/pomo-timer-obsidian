@@ -26,7 +26,7 @@ A Pomodoro timer panel for [Obsidian](https://obsidian.md), inspired by the [pom
 
 ## Screenshots
 
-> *(Add your own screenshots here)*
+<img width="1932" height="1764" alt="CleanShot 2026-04-25 at 14 41 45@2x" src="https://github.com/user-attachments/assets/17f3df56-fd69-49a2-bcee-a2ca455af800" />
 
 ---
 
