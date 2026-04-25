@@ -1,0 +1,10 @@
+{
+  "id": "pomo-timer",
+  "name": "Pomo Timer",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "A Pomodoro timer with work/break cycles, progress tracking, and desktop notifications — inspired by the pomo CLI.",
+  "author": "yaccoon",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}

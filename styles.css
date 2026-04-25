@@ -1,0 +1,410 @@
+/* Pomo Timer Plugin */
+
+.pomo-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 32px;
+  overflow-y: auto;
+  gap: 16px;
+  font-family: var(--font-interface);
+}
+
+/* ── Session label ───────────────────────────────────────────────────────────── */
+.pomo-session-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Ring ────────────────────────────────────────────────────────────────────── */
+.pomo-ring-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Click-to-edit time input (floats over ring) ─────────────────────────────── */
+.pomo-time-edit-input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 118px;
+  padding: 8px 12px;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-monospace);
+  text-align: center;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  border: 2px solid var(--interactive-accent);
+  border-radius: 10px;
+  outline: none;
+  z-index: 10;
+  letter-spacing: -0.5px;
+}
+
+/* ── Controls ────────────────────────────────────────────────────────────────── */
+.pomo-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pomo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s, transform 0.1s;
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+.pomo-btn:hover  { background: var(--background-modifier-active-hover); transform: scale(1.06); }
+.pomo-btn:active { transform: scale(0.95); }
+
+.pomo-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pomo-btn-primary {
+  width: 52px;
+  height: 52px;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: 50%;
+}
+
+.pomo-btn-primary svg { width: 22px; height: 22px; }
+.pomo-btn-primary:hover { background: var(--interactive-accent-hover); color: var(--text-on-accent); }
+
+.pomo-btn-secondary { width: 38px; height: 38px; }
+
+/* ── Quick-set preset chips ──────────────────────────────────────────────────── */
+.pomo-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.pomo-preset-chip {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  transition: border-color 0.15s;
+}
+
+.pomo-preset-chip:hover { border-color: var(--interactive-accent); }
+
+.pomo-preset-label {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-normal);
+  line-height: 1.4;
+}
+
+.pomo-preset-label:hover { color: var(--interactive-accent); }
+
+.pomo-preset-del {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px 8px 4px 2px;
+  font-size: 13px;
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+
+.pomo-preset-del:hover { color: var(--text-error, #e03131); }
+
+.pomo-preset-add {
+  border: 1px dashed var(--background-modifier-border);
+  background: transparent;
+  cursor: pointer;
+  padding: 4px 11px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-faint);
+  border-radius: 20px;
+  line-height: 1.4;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.pomo-preset-add:hover { border-color: var(--interactive-accent); color: var(--interactive-accent); }
+
+.pomo-preset-new {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--interactive-accent);
+  border-radius: 20px;
+  padding: 2px 8px;
+  background: var(--background-secondary);
+}
+
+.pomo-preset-new-input {
+  border: none;
+  background: transparent;
+  width: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-normal);
+  outline: none;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.pomo-preset-new-ok,
+.pomo-preset-new-cancel {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 3px;
+  line-height: 1;
+}
+
+.pomo-preset-new-ok     { color: var(--interactive-accent); }
+.pomo-preset-new-cancel { color: var(--text-faint); }
+
+/* ── Collapsible stat sections ───────────────────────────────────────────────── */
+.pomo-section {
+  width: 100%;
+  background: var(--background-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+}
+
+.pomo-section-summary {
+  padding: 11px 16px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;          /* hide default ▶ in Firefox */
+}
+
+/* Hide the default WebKit disclosure triangle */
+.pomo-section-summary::-webkit-details-marker { display: none; }
+
+.pomo-section-summary::after {
+  content: '›';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-faint);
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+details[open] > .pomo-section-summary::after {
+  transform: rotate(90deg);
+}
+
+.pomo-section-summary:hover { color: var(--text-normal); }
+.pomo-section-summary:hover::after { color: var(--text-muted); }
+
+.pomo-section-body {
+  padding: 4px 16px 16px;
+}
+
+/* ── Stats grid ──────────────────────────────────────────────────────────────── */
+.pomo-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.pomo-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pomo-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-normal);
+  line-height: 1;
+}
+
+.pomo-stat-label {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ── Weekly bar chart ────────────────────────────────────────────────────────── */
+.pomo-week-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 60px;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.pomo-week-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.pomo-week-bar-wrap {
+  display: flex;
+  align-items: flex-end;
+  height: 48px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pomo-week-bar {
+  width: 100%;
+  max-width: 20px;
+  border-radius: 3px 3px 0 0;
+  background: var(--interactive-accent);
+  opacity: 0.55;
+  transition: height 0.4s ease;
+  min-height: 2px;
+}
+
+.pomo-week-bar.today {
+  background: var(--interactive-accent);
+  opacity: 1;
+}
+
+.pomo-week-label {
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+/* ── Heatmap ─────────────────────────────────────────────────────────────────── */
+.pomo-heatmap-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.pomo-heatmap-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--background-modifier-border);
+  cursor: default;
+  transition: transform 0.1s;
+}
+
+.pomo-heatmap-day:hover { transform: scale(1.3); }
+
+.pomo-heatmap-day.level-1,
+.pomo-heatmap-legend-box.level-1 { background: color-mix(in srgb, var(--interactive-accent) 25%, transparent); }
+
+.pomo-heatmap-day.level-2,
+.pomo-heatmap-legend-box.level-2 { background: color-mix(in srgb, var(--interactive-accent) 50%, transparent); }
+
+.pomo-heatmap-day.level-3,
+.pomo-heatmap-legend-box.level-3 { background: color-mix(in srgb, var(--interactive-accent) 75%, transparent); }
+
+.pomo-heatmap-day.level-4,
+.pomo-heatmap-legend-box.level-4 { background: var(--interactive-accent); }
+
+.pomo-heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-top: 8px;
+}
+
+.pomo-heatmap-legend-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* ── Status bar ──────────────────────────────────────────────────────────────── */
+.pomo-statusbar {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 0 8px;
+}
+
+.pomo-statusbar:hover { color: var(--text-normal); }
+
+.pomo-statusbar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  display: inline-block;
+}
+
+.pomo-statusbar-dot.running {
+  background: var(--interactive-accent);
+  animation: pomo-pulse 1.5s infinite;
+}
+
+.pomo-statusbar-dot.break { background: var(--color-green, #27ae60); }
+
+@keyframes pomo-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.25); }
+}
+
+/* ── Settings ────────────────────────────────────────────────────────────────── */
+.pomo-setting-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+/* ── Confirm modal ───────────────────────────────────────────────────────────── */
+.pomo-confirm-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.pomo-confirm-title   { font-size: 20px; font-weight: 700; }
+.pomo-confirm-message { color: var(--text-muted); font-size: 14px; }
+.pomo-confirm-btns    { display: flex; gap: 10px; }
